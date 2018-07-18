@@ -9,19 +9,21 @@ import "./Header.css";
 
 class Header extends Component {
   render() {
-    return (
-      <div className="app-bar">
+    return <div className="app-bar">
         <AppBar position="static">
           <Toolbar>
             <div className="logo" />
             <Typography variant="title" color="inherit" className="flex" />
 
-            <Button color="inherit">Equipos</Button>
-            <Button color="inherit">Calendarios</Button>
+            <Button color="inherit">
+              <a href="/liga">Equipos</a>
+            </Button>
+            <Button color="inherit">
+              <a href="/calendario">Calendarios</a>
+            </Button>
           </Toolbar>
         </AppBar>
-      </div>
-    );
+      </div>;
   }
 }
 
