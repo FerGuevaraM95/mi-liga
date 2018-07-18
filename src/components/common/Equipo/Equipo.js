@@ -13,8 +13,6 @@ class Equipo extends Component {
     }
 
     setFav() {
-        console.log("Favorito!");
-
         // Respaldamos el estado existente
         const fav = {...this.state.fav};
 
@@ -35,8 +33,6 @@ class Equipo extends Component {
     }
 
     componentDidUpdate() {
-        console.log(this.props);
-        console.log(this.state.fav);
         localStorage.setItem(this.props.nombre, JSON.stringify(this.state.fav))
     }
 

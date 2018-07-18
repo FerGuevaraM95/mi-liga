@@ -11,31 +11,51 @@ import Button from 'material-ui/Button';
 import Equipo from './../common/Equipo/Equipo';
 import Jugador from './../common/Jugador/Jugador';
 
-// Imagenes
-import LogoFelinos from './../../assets/logos/felinos.png';
-import LogoPiratas from './../../assets/logos/piratas.png';
-import LogoTiburones from './../../assets/logos/tiburones.png';
-import FotoSergio from './../../assets/fotos/sergio.png';
-import FotoManuel from './../../assets/fotos/manuel.png';
-import FotoJose from './../../assets/fotos/jose.png';
-import FotoPaco from './../../assets/fotos/paco.png';
-
+// Data
+import equiposJSON from '../../assets/data/equipos.json';
 
 class Liga extends Component {
+
+    state = {
+        equipos: [],
+        jugadores: []
+    }
+
+    componentDidMount() {
+        let equipos = {...this.state.equipos};
+        equipos = equiposJSON;
+        this.setState({ equipos });
+
+        fetch("https://api-mi-liga.now.sh/api/jugadores")
+            .then((res) => res.json())
+            .then(jugadores => {
+                this.setState({jugadores: jugadores})
+            })
+    }
+
     render() {
         return (
             <div className="contenedor">
                 <div className="lista-equipos">
-                    <Equipo nombre="Felinos" logo={LogoFelinos} />
-                    <Equipo nombre="Piratas" logo={LogoPiratas} />
-                    <Equipo nombre="Tiburones" logo={LogoTiburones} />
+                    {
+                        this.state.equipos.map((equipo, index) => {
+                            return <Equipo
+                                key={index}
+                                nombre={equipo.nombre}
+                                logo={require('./../../assets/logos/' + equipo.logo)} />
+                        })
+                    }
                 </div>
                 <Button variant="raised" component={Link} to="/calendario/felinos" color="secondary">Ir al calendario</Button>
                 <div className="lista-jugadores">
-                    <Jugador nombre="Sergio" foto={FotoSergio} />
-                    <Jugador nombre="Manuel" foto={FotoManuel} />
-                    <Jugador nombre="Jose" foto={FotoJose} />
-                    <Jugador nombre="Paco" foto={FotoPaco} />
+                    {
+                        this.state.jugadores.map((jugador, index) => {
+                            return <Jugador
+                                key={index}
+                                nombre={jugador.nombre}
+                                foto={require('./../../assets/fotos/' + jugador.foto)} />
+                        })
+                    }
                 </div>
             </div>
         );
